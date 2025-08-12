@@ -1,17 +1,18 @@
-const path = require("path");
 const express = require("express");
 const app = express();
 
+// body parsing middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// ejs setup
 app.set("view engine", "ejs");
-app.set("views", path.join(path.dirname(__dirname), "views"));
+const path = require("path");
+const viewsPath = path.join(path.dirname(__dirname), "views");
+app.set("views", viewsPath);
 
-const staticRoutes = require("./routes/staticRoutes");
-const urlRoutes = require("./routes/urlRoutes");
-
-app.use("/", staticRoutes);
-app.use("/api/link", urlRoutes);
+// static routes
+const staticRoute = require("./routes/static");
+app.use("/", staticRoute);
 
 module.exports = app;

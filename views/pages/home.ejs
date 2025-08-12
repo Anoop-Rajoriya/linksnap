@@ -1,11 +1,212 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>hello world</h1>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LinkSnap</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        --font-size-sm: 16px;
+        --font-size: 20px;
+        --font-size-lg: 24px;
+        --font-weight: 400;
+        --font-weight-bold: 600;
+      }
+
+      body {
+        background: linear-gradient(
+          135deg,
+          #000000 0%,
+          #2d1b69 80%,
+          #5b3aa7 100%
+        );
+        color: #eeeeee;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        min-height: 100vh;
+        max-width: 100vw;
+        width: 100%;
+        position: relative;
+        overflow-x: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+      header {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-inline: 20px;
+        padding-block: 14px;
+      }
+      #logo {
+        color: inherit;
+        text-transform: capitalize;
+        text-decoration: none;
+        font-size: var(--font-size-lg);
+        font-weight: var(--font-weight-bold);
+      }
+      main {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-inline: 20px;
+        padding-block: 12px;
+      }
+      form {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s ease;
+        max-width: 500px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        padding-block: 1.5rem;
+        padding-inline: 1rem;
+      }
+      form label {
+        text-align: center;
+        font-size: var(--font-size-lg);
+        font-weight: var(--font-weight-bold);
+        margin-bottom: 2rem;
+      }
+      form input[type="url"] {
+        background: rgba(255, 255, 255, 0.1);
+        color: #ffffff;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        font-size: var(--font-size);
+        padding: 12px 20px;
+        margin-block: 12px;
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+        outline: none;
+      }
+      form input[type="url"]::placeholder {
+        color: rgba(255, 255, 255, 0.6);
+      }
+      form #error {
+        margin: 0;
+        padding: 0;
+        color: rgb(234, 146, 146);
+        font-size: var(--font-size-sm);
+      }
+      form button {
+        background: linear-gradient(45deg, #a855f7, #ec4899);
+        color: white;
+        font-size: var(--font-size);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        padding: 12px 20px;
+        margin-block-start: 1rem;
+        transition: all 0.3s ease;
+        outline: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        box-shadow: 0 10px 20px rgba(168, 85, 247, 0.3);
+      }
+      #container {
+        width: 100%;
+        padding-block: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+      #card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 16px;
+        padding: 1rem;
+        transition: all 0.3s ease;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+      #card a {
+        color: #a855f7;
+        text-decoration: none;
+        font-size: var(--font-size);
+        font-weight: var(--font-weight);
+        display: block;
+        margin-bottom: 1rem;
+        word-break: break-all;
+        transition: color 0.3s ease;
+      }
+      #card a:hover {
+        color: #ec4899;
+        text-shadow: 0 0 10px rgba(236, 72, 153, 0.5);
+      }
+      #card #footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      #card p {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: var(--font-size-sm);
+      }
+
+      #card p strong {
+        color: #ffffff;
+      }
+      #card #copy {
+        font-size: var(--font-size-sm);
+        font-weight: var(--font-weight);
+        background: linear-gradient(45deg, #6366f1, #8b5cf6);
+        border-radius: 8px;
+        border: none;
+        padding-inline: 16px;
+        padding-block: 4px;
+        color: inherit;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="/" id="logo">LinkSnap</a>
+    </header>
+    <main>
+      <form action="">
+        <label for="url">Shorten your link</label>
+        <input type="url" id="url" placeholder="Enter your long url here..." />
+        <% if(formError){ %>
+        <p id="error">Error: <%= formError %></p>
+        <% } %>
+        <button>Shorten</button>
+      </form>
+      <div id="container">
+        <% if(links){ links.map((link, index) => {%>
+        <div id="card" class="card-<%= index %>">
+          <a href="<%= link.url %>" target="_blank"> <%= link.url %> </a>
+          <div id="footer">
+            <p><strong>Validity:</strong> <%= link.validity %></p>
+            <button
+              onclick="clipToClipboard(this)"
+              data-url="<%= link.url %>"
+              id="copy"
+            >
+              copy
+            </button>
+          </div>
+        </div>
+        <%})} %>
+      </div>
+    </main>
+  </body>
+  <script>
+    function clipToClipboard(e) {
+      window.navigator.clipboard.writeText(e.getAttribute("data-url"));
+    }
+  </script>
 </html>
