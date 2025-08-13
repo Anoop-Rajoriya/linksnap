@@ -1,5 +1,14 @@
 # LinkSnap Development Diary
 
-## Basic Functionality
+## Core Features
 
-1. Create home page route (static). Home page has form for converting short url. ✔
+### **Generating short url:**
+
+```
+1. implement /api/urls/ post endpoint
+2. validate request urls
+3. generate shortCode with uniqueness
+4. create entry in database
+5. return short url
+
+```
