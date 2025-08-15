@@ -12,11 +12,11 @@ const viewsPath = path.join(path.dirname(__dirname), "views");
 app.set("views", viewsPath);
 
 // public routes
-const publicRoutes = require("./routes/publicRoutes");
-app.use("/", publicRoutes);
+const publicRoutes = require("./routes/public");
+app.use(publicRoutes);
 
 // api routes
-const apiRoutes = require("./routes/apiRoutes");
-app.use("/api/urls", apiRoutes);
+const apiRoutes = require("./routes/api");
+app.use("/api", apiRoutes);
 
 module.exports = app;
