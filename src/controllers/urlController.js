@@ -2,9 +2,13 @@ const { asyncHandler, ApiResponse, ApiError } = require("../utils/helpers");
 const { generateShortUrl, getOriginalUrl } = require("../services/urlService");
 
 const createShortUrl = asyncHandler(async (req, res) => {
-  const userRequest = req.body || {};
+  const { url, title, description } = req.body || {};
 
-  const urlData = await generateShortUrl(userRequest);
+  if (!url && !url.trim()) {
+    throw new ApiError(400, "URL is required.");
+  }
+
+  const urlData = await generateShortUrl({ url, title, description });
 
   const response = new ApiResponse(
     200,
@@ -17,6 +21,9 @@ const createShortUrl = asyncHandler(async (req, res) => {
 
 const redirectToOriginalUrl = asyncHandler(async (req, res) => {
   const shortCode = req.params.shortCode;
+  if (!shortCode.trim()) {
+    throw new ApiError(400, "Short url is required.");
+  }
   const originalUrl = await getOriginalUrl(shortCode);
   res.redirect(301, originalUrl);
 });
