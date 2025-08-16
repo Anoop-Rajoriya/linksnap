@@ -1,5 +1,9 @@
 const { asyncHandler, ApiResponse, ApiError } = require("../utils/helpers");
-const { generateShortUrl, getOriginalUrl } = require("../services/urlService");
+const {
+  generateShortUrl,
+  getOriginalUrl,
+  calculateUrlAnalytics,
+} = require("../services/urlService");
 
 const createShortUrl = asyncHandler(async (req, res) => {
   const { url, title, description } = req.body || {};
@@ -28,7 +32,23 @@ const redirectToOriginalUrl = asyncHandler(async (req, res) => {
   res.redirect(301, originalUrl);
 });
 
-const getUrlAnalytics = asyncHandler(async (req, res) => {});
+const getUrlAnalytics = asyncHandler(async (req, res) => {
+  const shortCode = req.params.shortCode;
+
+  if (!shortCode) {
+    throw new ApiError(400, "Short code is required.");
+  }
+
+  const urlAnalytics = await calculateUrlAnalytics(shortCode);
+
+  const response = new ApiResponse(
+    200,
+    urlAnalytics.message,
+    urlAnalytics.response
+  );
+
+  res.status(200).json(response);
+});
 const deleteShortUrl = asyncHandler(async (req, res) => {});
 const updateShortUrl = asyncHandler(async (req, res) => {});
 

@@ -62,14 +62,37 @@ const getOriginalUrl = async (shortCode) => {
   return urlEntry.originalUrl;
 };
 
-const getUrlAnalytics = () => {};
+const calculateUrlAnalytics = async (shortCode) => {
+  // valid short code
+  if (!isValidShortCode(shortCode)) {
+    throw new Error("Invalide short code formate.");
+  }
+
+  // find entry
+  const urlEntry = await UrlModel.findOne({ shortCode });
+  if (!urlEntry) {
+    throw new Error("Url Entry not found.");
+  }
+
+  // prepare analytics
+  const analytics = {
+    shortCode: urlEntry.shortCode,
+    clickCount: urlEntry.clickCount,
+    expiresAt: urlEntry.expiresAt,
+    isActive: urlEntry.isActive,
+    createdAt: urlEntry.createdAt,
+    updatedAt: urlEntry.updatedAt,
+  };
+
+  return { message: "Url Entry founded successfully.", response: analytics };
+};
 const deleteShortUrl = () => {};
 const updateShortUrl = () => {};
 
 module.exports = {
   generateShortUrl,
   getOriginalUrl,
-  getUrlAnalytics,
+  calculateUrlAnalytics,
   deleteShortUrl,
   updateShortUrl,
 };

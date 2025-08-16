@@ -20,3 +20,12 @@
 2. capture user info
 3. redirect to original url
 ```
+
+### **3 Url analytics:**
+
+```
+1. take short code & validate
+2. find url record
+3. prepare analytics response
+4. send it
+```

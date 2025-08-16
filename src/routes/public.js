@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const { redirectToOriginalUrl } = require("../controllers/urlController");
+const {
+  redirectToOriginalUrl,
+  getUrlAnalytics,
+} = require("../controllers/urlController");
 
 // router.get("/", (req, res) => {
 //   res.render("pages/home", {
@@ -10,5 +13,6 @@ const { redirectToOriginalUrl } = require("../controllers/urlController");
 // });
 
 router.get("/:shortCode", redirectToOriginalUrl);
+router.get("/stats/:shortCode", getUrlAnalytics);
 
 module.exports = router;
