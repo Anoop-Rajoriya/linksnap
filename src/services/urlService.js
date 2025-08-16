@@ -5,7 +5,10 @@ const {
   isValidShortCode,
   isValidISODate,
 } = require("../utils/validators");
-const { generateShortCode, formateUrl } = require("../utils/urls");
+const {
+  generateShortCode,
+  formateUrl,
+} = require("../utils/shortCodeGenerator");
 
 const generateShortUrl = async (body) => {
   try {

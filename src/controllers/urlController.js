@@ -1,5 +1,5 @@
-const { asyncHandler, ApiResponse, ApiError } = require("../utils/helper");
-const { generateShortUrl, getOriginalUrl } = require("../services/url");
+const { asyncHandler, ApiResponse, ApiError } = require("../utils/helpers");
+const { generateShortUrl, getOriginalUrl } = require("../services/urlService");
 
 const createShortUrl = asyncHandler(async (req, res) => {
   const userRequest = req.body || {};
