@@ -1,31 +1,123 @@
 # LinkSnap Development Diary
 
-## Core Features
+## Initial Setup
 
-### **1. Generating short url:**
-
-```
-1. implement /api/urls/ post endpoint
-2. validate request urls
-3. generate shortCode with uniqueness
-4. create entry in database
-5. return short url
+### Dir Structure:
 
 ```
-
-### **2. Url Redirecting:**
-
+linksnap/
+├── src/
+│   ├── controllers/
+│   │   ├── authController.js
+│   │   ├── urlController.js
+│   │   ├── analyticsController.js
+│   │   └── adminController.js
+│   ├── services/
+│   │   ├── authService.js
+│   │   ├── urlService.js
+│   │   └── analyticsService.js
+│   ├── models/
+│   │   ├── User.js
+│   │   ├── Url.js
+│   │   └── Analytics.js
+│   ├── routes/
+│   │   ├── web/
+│   │   │   ├── auth.js
+│   │   │   ├── dashboard.js
+│   │   │   └── home.js
+│   │   └── api/
+│   │       ├── auth.js
+│   │       ├── urls.js
+│   │       └── analytics.js
+│   ├── middleware/
+│   │   ├── auth.js
+│   │   ├── validation.js
+│   │   └── errorHandler.js
+│   ├── utils/
+│   │   ├── shortCodeGenerator.js
+│   │   ├── validators.js
+│   │   └── helpers.js
+│   └── config/
+│       ├── database.js
+│       └── environment.js
+├── views/
+│   ├── layouts/
+│   ├── pages/
+│   ├── partials/
+│   └── errors/
+├── public/
+│   ├── css/
+│   ├── js/
+│   └── images/
+├── tests/
+├── docs/
+└── package.json
 ```
-1. validate short code
-2. capture user info
-3. redirect to original url
+
+### Installing Dependencies
+
+```json
+{
+  "bcryptjs": "^3.0.2",
+  "dotenv": "^17.2.1",
+  "ejs": "^3.1.10",
+  "express": "^5.1.0",
+  "express-flash": "^0.0.2",
+  "jsonwebtoken": "^9.0.2",
+  "mongoose": "^8.17.1",
+  "morgan": "^1.10.1"
+}
 ```
 
-### **3 Url analytics:**
+### Database Models
 
+#### Users Collection
+
+```js
+{
+  _id: ObjectId,
+  email: String (unique, required),
+  password: String (hashed, required),
+  username: String (unique),
+  createdAt: Date,
+  isActive: Boolean,
+  role: String (default: 'user')
+}
 ```
-1. take short code & validate
-2. find url record
-3. prepare analytics response
-4. send it
+
+#### Urls Collection
+
+```js
+{
+  _id: ObjectId,
+  originalUrl: String (required),
+  shortCode: String (unique, required, index),
+  customCode: Boolean (default: false),
+  title: String,
+  description: String,
+  userId: ObjectId (ref: 'User'),
+  clickCount: Number (default: 0),
+  isActive: Boolean (default: true),
+  expiresAt: Date,
+  createdAt: Date,
+  updatedAt: Date
+}
+```
+
+#### Analytics Collection
+
+```js
+{
+  _id: ObjectId,
+  urlId: ObjectId (ref: 'URL'),
+  clickedAt: Date,
+  ipAddress: String,
+  userAgent: String,
+  referrer: String,
+  country: String,
+  city: String,
+  browser: String,
+  os: String,
+  device: String
+}
 ```
