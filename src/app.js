@@ -11,5 +11,12 @@ const path = require("path");
 const viewsPath = path.join(path.dirname(__dirname), "views");
 app.set("views", viewsPath);
 
+// web endpoints
+// const home = require("./routes/web/home");
+// app.use(home);
+
+// api endpoints
+const urls = require("./routes/api/urls");
+app.use("/api/urls", urls);
 
 module.exports = app;

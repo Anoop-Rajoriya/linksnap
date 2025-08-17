@@ -27,4 +27,22 @@ function isValidISODate(str) {
   );
 }
 
-module.exports = { isValidUrl, isSafeUrl, isValidShortCode, isValidISODate };
+function isApiRequest(req) {
+  const baseUrl = req.baseUrl || "";
+  const contentType = req.get("Content-Type") || "";
+  const acceptsJson = req.get("Accept")?.includes("application/json");
+
+  return (
+    baseUrl.startsWith("/api") ||
+    contentType.includes("application/json") ||
+    (acceptsJson && !req.get("Accept")?.includes("text/html"))
+  );
+}
+
+module.exports = {
+  isValidUrl,
+  isSafeUrl,
+  isValidShortCode,
+  isValidISODate,
+  isApiRequest,
+};

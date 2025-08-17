@@ -6,6 +6,7 @@ const urlSchema = mongoose.Schema(
       type: String,
       required: [true, "URL is required."],
       trim: true,
+      maxlength: 200
     },
     shortCode: {
       type: String,
