@@ -121,3 +121,86 @@ linksnap/
   device: String
 }
 ```
+
+## Core Features
+
+### 1. URL Shortening
+
+**Generate short url from long url:**
+
+```
+Approache:
+- Accept form data: url, title, description
+- Validating data
+- Check url existance in DB
+- Create new document
+- return shortend URL (json formate)
+
+EndPoint:
+- POST /api/urls  (Create Short URL)
+```
+
+### 2. URL Redirection
+
+**Redirect short URLs to original:**
+
+```
+Approach:
+- Extract short code from dynamic route
+- Validate short code
+- Find Database document
+- redirect to original url
+
+EndPoint:
+- GET  /:shortCode  (URL Redirection)
+```
+
+### 3. Basic Analytics
+
+**Track URL usage statistics:**
+
+```
+Approach:
+- Extract short code form dynamic route
+- Validate short code
+- Find Database document
+- Construct analytics Data
+- return analytics
+
+EndPoint:
+GET  /stats/:shortCode  # Public URL Statistics
+```
+
+### 4. Homepage
+
+**Landing page with shortening form:**
+
+```
+Approach:
+- Accept form submission with url(required), title(optional), description(optional).
+- Validate url, title, description
+- Check for url existance
+- Find url document
+- display url data
+
+EndPint:
+GET  /  # Homepage
+POSt /  # HomePage Form Submission
+```
+
+### 5. Error Handling
+
+**Proper error responses:**
+
+```
+Approach:
+- ErrorHandler Middleware
+  - Handle mongoose errors
+  - Handle ApiError
+  - Handle other or internal errors
+- Custom ApiError
+  - error message
+  - error status code
+  - success = false
+  - stack traces
+```
