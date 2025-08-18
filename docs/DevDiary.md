@@ -124,7 +124,7 @@ linksnap/
 
 ## Core Features
 
-### 1. URL Shortening
+### 1. URL Shortening ✔
 
 **Generate short url from long url:**
 
@@ -140,7 +140,7 @@ EndPoint:
 - POST /api/urls  (Create Short URL)
 ```
 
-### 2. URL Redirection
+### 2. URL Redirection ✔
 
 **Redirect short URLs to original:**
 
@@ -149,13 +149,14 @@ Approach:
 - Extract short code from dynamic route
 - Validate short code
 - Find Database document
+- store user information
 - redirect to original url
 
 EndPoint:
 - GET  /:shortCode  (URL Redirection)
 ```
 
-### 3. Basic Analytics
+### 3. Basic Analytics ✔
 
 **Track URL usage statistics:**
 
@@ -165,7 +166,7 @@ Approach:
 - Validate short code
 - Find Database document
 - Construct analytics Data
-- return analytics
+- display url stats
 
 EndPoint:
 GET  /stats/:shortCode  # Public URL Statistics

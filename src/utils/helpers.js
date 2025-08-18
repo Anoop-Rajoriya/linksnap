@@ -30,4 +30,15 @@ const asyncHandler = (fn) => {
   };
 };
 
-module.exports = { ApiResponse, ApiError, asyncHandler };
+const formateISODateString = (ISODate) => {
+  if (!ISODate) return null;
+  const date = new Date(ISODate);
+  const formater = new Intl.DateTimeFormat("en-GB", {
+    dateStyle: "medium",
+    timeStyle: "medium",
+  });
+
+  return formater.format(date);
+};
+
+module.exports = { ApiResponse, ApiError, asyncHandler, formateISODateString };

@@ -1,7 +1,16 @@
 const { asyncHandler, ApiError, ApiResponse } = require("../utils/helpers");
-const { isApiRequest, isValidUrl, isSafeUrl } = require("../utils/validators");
-const { generateShortUrl } = require("../services/urlService");
+const {
+  isApiRequest,
+  isValidUrl,
+  isSafeUrl,
+  isValidShortCode,
+} = require("../utils/validators");
 const { formateUrl } = require("../utils/shortCodeGenerator");
+const {
+  generateShortUrl,
+  getUrlByShortCode,
+  getUrlStatsByShortCode,
+} = require("../services/urlService");
 
 const createShortUrl = asyncHandler(async (req, res) => {
   const { url, title, description } = req.body || {};
@@ -33,12 +42,42 @@ const createShortUrl = asyncHandler(async (req, res) => {
       urlData.message || "Short url generated",
       urlData.data
     );
-    res.status(200).json(jsonResponse);
+    return res.status(200).json(jsonResponse);
   } else {
-    res.render("pages/home", { ...urlData });
+    return res.render("pages/home", { ...urlData });
   }
 });
 
-const redirectToOriginalUrl = asyncHandler(async (req, res) => {});
+const redirectToOriginalUrl = asyncHandler(async (req, res) => {
+  const shortCode = req.params.shortCode;
+  if (!shortCode) {
+    throw new ApiError(400, "Short Code required");
+  }
 
-module.exports = { createShortUrl, redirectToOriginalUrl };
+  if (!isValidShortCode(shortCode)) {
+    throw new ApiError(400, "Invalid short code");
+  }
+
+  const originalUrl = await getUrlByShortCode(shortCode);
+
+  return res.redirect(301, originalUrl);
+});
+
+const getUrlStats = asyncHandler(async (req, res) => {
+  const shortCode = req.params.shortCode;
+
+  if (!isValidShortCode(shortCode)) {
+    throw new ApiError("Invalid short code");
+  }
+
+  const urlStats = await getUrlStatsByShortCode(shortCode);
+
+  if (isApiRequest(req)) {
+    const response = new ApiResponse(200, "URL stats found", urlStats);
+    return res.status(200).json(response);
+  } else {
+    return res.render("pages/urlStats", urlStats);
+  }
+});
+
+module.exports = { createShortUrl, redirectToOriginalUrl, getUrlStats };
