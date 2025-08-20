@@ -1,17 +1,17 @@
 const express = require("express");
 const router = express.Router();
 const {
-  getHome,
+  rendreHomePage,
   createShortUrl,
-  getAllAnalytics,
-  getAnalyticsByShortCode,
   redirectToUrl,
+  renderAnalyticsPage,
+  renderUrlAnalyticsPage,
 } = require("../controllers/urls.controllers");
 
 // URL routes
-router.route("/").get(getHome).post(createShortUrl);
-router.route("/analytics").get(getAllAnalytics);
-router.route("/analytics/:shortCode").get(getAnalyticsByShortCode);
+router.route("/").get(rendreHomePage).post(createShortUrl);
+router.route("/analytics").get(renderAnalyticsPage);
+router.route("/analytics/:shortCode").get(renderUrlAnalyticsPage);
 
 // Redirect route
 router.route("/:shortCode").get(redirectToUrl);

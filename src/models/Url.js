@@ -6,7 +6,7 @@ const urlSchema = mongoose.Schema(
       type: String,
       required: [true, "URL is required."],
       trim: true,
-      maxlength: 200
+      maxlength: 200,
     },
     shortCode: {
       type: String,
@@ -15,27 +15,20 @@ const urlSchema = mongoose.Schema(
       index: true,
       trim: true,
     },
-    customCode: {
-      type: Boolean,
-      default: false,
-    },
     title: {
       type: String,
       default: "No Title",
       trim: true,
+      index: true,
     },
-    description: {
+    clientId: {
       type: String,
-      default: "No Description",
-      trim: true,
+      unique: true,
+      index: true,
     },
     userId: {
       type: mongoose.Schema.ObjectId,
       ref: "User",
-    },
-    clickCount: {
-      type: Number,
-      default: 0,
     },
     isActive: {
       type: Boolean,

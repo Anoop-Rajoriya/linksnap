@@ -4,6 +4,8 @@ const app = express();
 // body parsing middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+const cookieParser = require("cookie-parser");
+app.use(cookieParser());
 
 // ejs setup
 app.set("view engine", "ejs");
@@ -21,7 +23,7 @@ app.use(usersRoutes);
 const adminRoutes = require("./routes/admin");
 app.use(adminRoutes);
 // error handler
-const handleError = require("./middleware/errorHandler")
-app.use(handleError)
+const handleError = require("./middleware/errorHandler");
+app.use(handleError);
 
 module.exports = app;

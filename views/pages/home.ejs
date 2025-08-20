@@ -3,131 +3,140 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>URL Shortener</title>
+    <title>LinkSnap</title>
     <style>
-      :root {
-        --bg: #1e1e2e;
-        --card: #2a2a3c;
-        --text: #e0e0e0;
-        --muted: #a0a0b0;
-        --accent: #4dabf7;
-      }
-
       body {
-        font-family: "Segoe UI", Tahoma, sans-serif;
-        background: var(--bg);
-        color: var(--text);
         margin: 0;
-        padding: 1rem;
+        font-family: Arial, sans-serif;
+        background-color: #121212;
+        color: #eaeaea;
       }
-
-      h1 {
-        text-align: center;
-        color: var(--accent);
-        margin-bottom: 1.5rem;
+      header {
+        background-color: #1f1f1f;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
       }
-
-      .form-container {
-        background: var(--card);
-        padding: 1.5rem;
-        border-radius: 10px;
-        max-width: 600px;
-        margin: 0 auto 2rem auto;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-      }
-
-      form {
-        display: grid;
-        gap: 1rem;
-      }
-
-      label {
-        display: block;
-        font-size: 0.9rem;
-        margin-bottom: 0.25rem;
-        color: var(--muted);
-      }
-
-      input,
-      textarea,
-      button {
-        width: 100%;
-        padding: 0.6rem;
-        border-radius: 6px;
-        border: none;
-        font-size: 1rem;
-      }
-
-      input,
-      textarea {
-        background: #3a3a4c;
-        color: var(--text);
-      }
-
-      button {
-        background: var(--accent);
+      header h1 {
+        margin: 0;
+        font-size: 1.5rem;
         color: #fff;
-        cursor: pointer;
-        font-weight: 600;
       }
-
-      button:hover {
-        opacity: 0.9;
+      .form-container {
+        max-width: 600px;
+        margin: 2rem auto;
+        padding: 1.5rem;
+        background: #1c1c1c;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
       }
-
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-        gap: 1rem;
-      }
-
-      .card {
-        background: var(--card);
-        padding: 1rem;
-        border-radius: 10px;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+      form {
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
+        gap: 1rem;
       }
-
-      .card h3 {
-        margin: 0;
-        font-size: 1rem;
-        color: var(--accent);
-      }
-
-      .card p {
-        margin: 0.2rem 0;
+      label {
         font-size: 0.9rem;
-        color: var(--muted);
+        margin-bottom: 0.3rem;
       }
-
-      .card a {
-        color: var(--accent);
+      input,
+      textarea {
+        padding: 0.6rem;
+        border: 1px solid #333;
+        border-radius: 6px;
+        background: #2a2a2a;
+        color: #fff;
+        width: 100%;
+        resize: none;
+      }
+      input:focus,
+      textarea:focus {
+        outline: none;
+        border-color: #0078ff;
+      }
+      button {
+        padding: 0.8rem;
+        border: none;
+        border-radius: 6px;
+        background: #0078ff;
+        color: #fff;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #005fcc;
+      }
+      .message {
+        margin: 1rem 0;
+        padding: 0.8rem;
+        border-radius: 6px;
+        font-size: 0.95rem;
+      }
+      .success {
+        background: #1e4620;
+        color: #a8f0b0;
+        border: 1px solid #2f7a34;
+      }
+      .error {
+        background: #461e1e;
+        color: #f0a8a8;
+        border: 1px solid #7a2f2f;
+      }
+      .cards-container {
+        max-width: 1000px;
+        margin: 2rem auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        padding: 0 1rem;
+      }
+      .card {
+        background: #1c1c1c;
+        padding: 1rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+        transition: transform 0.2s;
+      }
+      .card:hover {
+        transform: translateY(-3px);
+      }
+      .card h3 {
+        margin: 0 0 0.5rem;
+        font-size: 1.2rem;
+        color: #fff;
+      }
+      .card p {
+        margin: 0.3rem 0;
+        font-size: 0.95rem;
+        color: #ccc;
+      }
+      .short-url {
+        color: #4da6ff;
         text-decoration: none;
-        word-break: break-all;
+      }
+      .short-url:hover {
+        text-decoration: underline;
       }
     </style>
   </head>
   <body>
-    <h1>🔗 URL Shortener</h1>
+    <header>
+      <h1>LinkSnap | Home</h1>
+    </header>
 
-    <!-- Form -->
-    <div class="form-container">
-      <form action="/create" method="POST">
+    <!-- URL Shortening Form -->
+    <section class="form-container">
+      <!-- Success & Error Messages -->
+      <% if (success) { %>
+      <div class="message success"><%= success %></div>
+      <% } %> <% if (error) { %>
+      <div class="message error"><%= error %></div>
+      <% } %>
+
+      <form action="/shorten" method="POST">
         <div>
-          <label for="url">Original URL *</label>
-          <input
-            type="url"
-            id="url"
-            name="url"
-            placeholder="https://example.com"
-            required
-          />
-        </div>
-        <div>
-          <label for="title">Title (optional)</label>
+          <label for="title">URL Title *</label>
           <input
             type="text"
             id="title"
@@ -136,36 +145,39 @@
           />
         </div>
         <div>
-          <label for="description">Description (optional)</label>
-          <textarea
-            id="description"
-            name="description"
-            rows="2"
-            placeholder="Write description..."
-          ></textarea>
+          <label for="url">Long URL *</label>
+          <input
+            type="url"
+            id="url"
+            name="url"
+            placeholder="https://example.com"
+            required
+          />
         </div>
-        <button type="submit">Generate Short URL</button>
+        <button type="submit">Shorten URL</button>
       </form>
-    </div>
+    </section>
 
-    <!-- Generated URLs -->
-    <div class="grid">
-      <% urls.forEach(url => { %>
+    <!-- URLs Cards -->
+    <section class="cards-container">
+      <% if (urls && urls.length > 0) { %> <% urls.forEach(url => { %>
       <div class="card">
-        <h3>
-          <a href="<%= url.shortUrl %>" target="_blank"><%= url.shortUrl %></a>
-        </h3>
-        <% if (url.title) { %>
-        <p><strong>Title:</strong> <%= url.title %></p>
-        <% } %> <% if (url.description) { %>
-        <p><strong>Description:</strong> <%= url.description %></p>
-        <% } %>
+        <h3><%= url.title || "Untitled" %></h3>
         <p>
-          <strong>Expiry:</strong> <%= url.expiryDate ? url.expiryDate : "No
-          Expiry" %>
+          Short URL:
+          <a href="<%= url.shortUrl %>" class="short-url"
+            ><%= url.shortUrl %></a
+          >
         </p>
+        <p>
+          Expiry: <%= url.expiresAt ? url.expiresAt.toDateString() : "Not set"
+          %>
+        </p>
+        <p>Visits: <%= url.visits %></p>
       </div>
-      <% }) %>
-    </div>
+      <% }) %> <% } else { %>
+      <p style="text-align: center; color: #777">No URLs generated yet.</p>
+      <% } %>
+    </section>
   </body>
 </html>
