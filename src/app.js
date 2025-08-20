@@ -11,16 +11,17 @@ const path = require("path");
 const viewsPath = path.join(path.dirname(__dirname), "views");
 app.set("views", viewsPath);
 
-// web endpoints
-const home = require("./routes/web/home");
-app.use(home);
-
-// redirect endpoint
-const { redirectToOriginalUrl } = require("./controllers/urlController");
-app.get("/r/:shortCode", redirectToOriginalUrl);
-
-// api endpoints
-const urls = require("./routes/api/urls");
-app.use("/api/urls", urls);
+// urls routes
+const urlsRoutes = require("./routes/urls");
+app.use(urlsRoutes);
+// users routes
+const usersRoutes = require("./routes/users");
+app.use(usersRoutes);
+// admin routes
+const adminRoutes = require("./routes/admin");
+app.use(adminRoutes);
+// error handler
+const handleError = require("./middleware/errorHandler")
+app.use(handleError)
 
 module.exports = app;
