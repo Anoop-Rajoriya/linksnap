@@ -1,48 +1,46 @@
 const mongoose = require("mongoose");
 
-const urlSchema = mongoose.Schema(
+const urlSchema = new mongoose.Schema(
   {
     originalUrl: {
       type: String,
-      required: [true, "URL is required."],
+      required: true,
       trim: true,
-      maxlength: 200,
+      validate: {
+        validator: function (v) {
+          return /^https?:\/\/.+/.test(v);
+        },
+        message: "Please provide a valid URL",
+      },
     },
     shortCode: {
       type: String,
-      required: [true, "ShortCode is required."],
-      unique: [true, "ShortCode must be unique."],
-      index: true,
-      trim: true,
-    },
-    title: {
-      type: String,
-      default: "No Title",
-      trim: true,
-      index: true,
-    },
-    clientId: {
-      type: String,
+      required: true,
       unique: true,
-      index: true,
+      trim: true,
+      minlength: 4,
+      maxlength: 10,
     },
-    userId: {
-      type: mongoose.Schema.ObjectId,
-      ref: "User",
-    },
-    isActive: {
-      type: Boolean,
-      default: true,
-    },
+    clicks: [
+      {
+        timestamp: { type: Date, default: Date.now },
+        ip: String,
+        userAgent: String,
+        referrer: String,
+      },
+    ],
+    totalClicks: { type: Number, default: 0 },
+    isActive: { type: Boolean, default: true },
     expiresAt: {
       type: Date,
-      default: () => new Date(Date.now() + 48 * 60 * 60 * 1000), // default 2 days expiry
+      default: () => new Date(Date.now() + 48 * 60 * 60 * 1000), // 48 hours
     },
   },
   { timestamps: true }
 );
 
-// custom expiry
-urlSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
+// Indexes
+urlSchema.index({ shortCode: 1, createdAt: -1 });
+urlSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 }); // TTL index
 
 module.exports = mongoose.model("Url", urlSchema);

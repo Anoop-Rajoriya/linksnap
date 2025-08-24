@@ -1,1 +1,1 @@
-# LinkSnap
+# LinkSnap: A URL Shortening Service

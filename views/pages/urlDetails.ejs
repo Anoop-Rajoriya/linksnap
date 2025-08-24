@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="container">
+    <%- include('../partials/header') %>
+
+    <main>
+      <h1>Analytics for <%= url.shortCode %></h1>
+
+      <!-- Card with URL info -->
+      <div class="url-card">
+        <div class="card-header">
+          <a href="<%= url.shortUrl %>" target="_blank" class="short-link">
+            <%= url.shortUrl %>
+          </a>
+          <span class="status <%= url.isActive ? 'active' : 'expired' %>">
+            <%= url.isActive ? "Active" : "Expired" %>
+          </span>
+        </div>
+
+        <p class="original-url"><%= url.originalUrl %></p>
+
+        <div class="card-stats">
+          <div>
+            <strong><%= url.totalClicks %></strong>
+            <span>Total Clicks</span>
+          </div>
+          <div>
+            <strong><%= new Date(url.createdAt).toLocaleDateString() %></strong>
+            <span>Created</span>
+          </div>
+          <div>
+            <strong><%= new Date(url.expiresAt).toLocaleDateString() %></strong>
+            <span>Expires</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Clicks -->
+      <section class="clicks-section">
+        <h2>Recent Clicks</h2>
+
+        <% if (url.clicks && url.clicks.length > 0) { %>
+        <ul class="clicks-list">
+          <% url.clicks.slice(-10).reverse().forEach(click => { %>
+          <li class="click-item">
+            <div>
+              <strong>Time:</strong>
+              <%= new Date(click.timestamp).toLocaleString() %>
+            </div>
+            <div><strong>IP:</strong> <%= click.ip || "Unknown" %></div>
+            <div>
+              <strong>Referrer:</strong> <%= click.referrer || "Direct" %>
+            </div>
+            <div>
+              <strong>User Agent:</strong> <%= click.userAgent || "Unknown" %>
+            </div>
+          </li>
+          <% }) %>
+        </ul>
+        <% } else { %>
+        <p>No clicks recorded yet.</p>
+        <% } %>
+      </section>
+
+      <div style="margin-top: var(--space-md)">
+        <a href="/analytics" class="details-link">← Back to Analytics</a>
+      </div>
+    </main>
+
+    <%- include('../partials/footer') %>
+  </body>
+</html>

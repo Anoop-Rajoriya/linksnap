@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 - Page Not Found</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="container">
+    <div class="error">
+      <div class="error-code">404</div>
+      <div class="error-message">
+        <%= errorMessage || "Oops! Page Not Found" %>
+      </div>
+      <% if(errorDetailes){ %>
+      <div class="error-detailes"><%= errorDetailes %></div>
+      <% } %>
+      <a href="/" class="home-link">Go Back Home</a>
+    </div>
+  </body>
+</html>
