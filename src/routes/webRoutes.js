@@ -2,25 +2,18 @@ const express = require("express");
 const router = express.Router();
 
 const {
-  renderHome,
-  createUrl,
-  redirectUrl,
-  renderAnalyticsList,
-  renderAnalyticsDetail,
+  renderHomePage,
+  renderDetailPage,
+  handleUrlShorten,
+  handleRedirect,
 } = require("../controllers/web.controller");
 
-// Home page
-router.get("/", renderHome);
+// URLs
+router.get("/", renderHomePage);
+router.get("/detail/:shortCode", renderDetailPage);
 
-// Handle URL Shortening
-router.post("/shorten", createUrl);
+router.post("/shorten", handleUrlShorten);
 
-// All URLs analytics
-router.get("/analytics", renderAnalyticsList);
-
-// Analytics for a specific short code
-router.get("/analytics/:shortCode", renderAnalyticsDetail);
-
-router.get("/:shortCode", redirectUrl);
+router.get("/:shortCode", handleRedirect);
 
 module.exports = router;

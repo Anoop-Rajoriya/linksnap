@@ -1,6 +1,9 @@
-<header class="">
-  <a href="/" class="logo"><%= title || "LinkSnap" %></a>
+<header>
+  <a href="/" class="logo-link">LinkSnap <%= "| " + route %></a>
   <nav>
-    <a href="/analytics" class="link">Analytics</a>
+    <% if (routes && routes.length > 0) { %> <% routes.forEach(function(route) {
+    %>
+    <a class="links" href="<%= route.path %>"><%= route.name %></a>
+    <% }); %> <% } %>
   </nav>
 </header>

@@ -3,36 +3,60 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= title %></title>
-    <link rel="stylesheet" href="styles.css" />
+    <title><%= "LinkSnap - " + route %></title>
+    <link rel="stylesheet" href="style.css" />
   </head>
-  <body class="container">
+  <body>
     <%- include('../partials/header') %>
     <main>
-      <form action="/shorten" method="POST" novalidate>
-        <input type="url" name="url" required placeholder="Enter URL here..." />
-        <button type="submit">Shorten URL</button>
-      </form>
-
-      <% if (success) { %>
-      <div class="alert success"><%= success %></div>
-      <% } if (error) { %>
-      <div class="alert error"><%= error %></div>
-      <% } %>
-
-      <ul>
-        <% if (urls && urls.length > 0) { urls.forEach(url => { %>
-        <li>
-          <a href="<%= url.shortUrl %>" target="_blank">
-            <%= url.shortUrl %>
+      <div class="url-form">
+        <form action="/shorten" method="post">
+          <input type="url" name="url" required />
+          <button>shorten</button>
+        </form>
+        <div class="alert">
+          <% if (success) { %>
+          <p class="success"><%= success %></p>
+          <% } if (error) { %>
+          <p class="error"><%= error %></p>
+          <% } %>
+        </div>
+      </div>
+      <div class="urls">
+        <% if(urls && urls.length > 0){ urls.forEach(function(url){ %>
+        <div class="url-card">
+          <div class="card-header">
+            <a href="<%= url.shortUrl %>" target="_blank" class="short-link">
+              <%= url.shortUrl %>
+            </a>
+            <span
+              class="short-link-status <%= url.isActive ? 'active' : 'inActive' %>"
+              >Active</span
+            >
+          </div>
+          <p class="original-url"><%= url.originalUrl %></p>
+          <div class="card-stats">
+            <p>
+              <strong>Total Clicks</strong>
+              <span> <%= url.totalClicks %> </span>
+            </p>
+            <p>
+              <strong>Created</strong>
+              <span> <%= new Date(url.createdAt).toLocaleString() %> </span>
+            </p>
+            <p>
+              <strong>Expires</strong>
+              <span><%= new Date(url.expiresAt).toLocaleString() %></span>
+            </p>
+          </div>
+          <a href="<%= '/details/'+url.shortCode %>" class="detail-link">
+            Details
           </a>
-          <span><%= url.clicks || 0 %> Clicks </span>
-          <a href="/analytics/<%= url.shortCode %>">View Analytics</a>
-        </li>
-        <% }) } else { %>
-        <li>No URLs available</li>
+        </div>
+        <% })} else{ %>
+        <div class="note">No urls found</div>
         <% } %>
-      </ul>
+      </div>
     </main>
     <%- include('../partials/footer') %>
   </body>
