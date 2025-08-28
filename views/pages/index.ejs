@@ -3,61 +3,58 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= "LinkSnap - " + route %></title>
-    <link rel="stylesheet" href="style.css" />
+    <title><%= pageTitle %></title>
+    <link rel="stylesheet" href="/style.css" />
   </head>
   <body>
-    <%- include('../partials/header') %>
+    <%- include("../partials/header") %>
     <main>
-      <div class="url-form">
-        <form action="/shorten" method="post">
-          <input type="url" name="url" required />
-          <button>shorten</button>
-        </form>
-        <div class="alert">
-          <% if (success) { %>
-          <p class="success"><%= success %></p>
-          <% } if (error) { %>
-          <p class="error"><%= error %></p>
-          <% } %>
-        </div>
-      </div>
-      <div class="urls">
-        <% if(urls && urls.length > 0){ urls.forEach(function(url){ %>
-        <div class="url-card">
-          <div class="card-header">
-            <a href="<%= url.shortUrl %>" target="_blank" class="short-link">
-              <%= url.shortUrl %>
-            </a>
-            <span
-              class="short-link-status <%= url.isActive ? 'active' : 'inActive' %>"
-              >Active</span
-            >
-          </div>
-          <p class="original-url"><%= url.originalUrl %></p>
-          <div class="card-stats">
-            <p>
-              <strong>Total Clicks</strong>
-              <span> <%= url.totalClicks %> </span>
-            </p>
-            <p>
-              <strong>Created</strong>
-              <span> <%= new Date(url.createdAt).toLocaleString() %> </span>
-            </p>
-            <p>
-              <strong>Expires</strong>
-              <span><%= new Date(url.expiresAt).toLocaleString() %></span>
-            </p>
-          </div>
-          <a href="<%= '/details/'+url.shortCode %>" class="detail-link">
-            Details
-          </a>
-        </div>
-        <% })} else{ %>
-        <div class="note">No urls found</div>
+      <form action="/shorten" method="post">
+        <input
+          class="input"
+          type="url"
+          name="url"
+          placeholder="Enter URL..."
+          required
+        />
+        <button class="button">Shorten</button>
+      </form>
+
+      <div class="alert">
+        <% if(data.success){ %>
+        <p class="alert-success"><%= data.success %></p>
+        <% } else if(data.error){ %>
+        <p class="alert-error"><%= data.error %></p>
         <% } %>
       </div>
+
+      <div class="card-layout">
+        <% if(data.urls && data.urls.length > 0){ %> 
+        <% data.urls.forEach(function (url){ %>
+        <div class="card">
+          <a href="<%= url.shortUrl %>" class="shortUrl">
+            <%= url.shortUrl %>
+          </a>
+          <a href="<%= url.originalUrl %>"> <%= url.originalUrl %> </a>
+          <ul>
+            <li>
+              <span>Short Code</span>
+              <span><%= url.shortCode %></span>
+            </li>
+            <li>
+              <span>Created</span>
+              <span><%= url.createdAt %></span>
+            </li>
+            <li>
+              <span>Expires</span>
+              <span><%= url.expiresAt %></span>
+            </li>
+          </ul>
+          <a href="<%= '/details/' + url.shortCode %>"> Details </a>
+        </div>
+        <% })} %>
+      </div>
     </main>
-    <%- include('../partials/footer') %>
+    <%- include("../partials/footer") %>
   </body>
 </html>

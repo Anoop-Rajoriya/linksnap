@@ -31,7 +31,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Static files
-app.use(express.static(path.join(path.dirname(__dirname), "public")));
+app.use(express.static("public"));
 
 // View engine setup
 app.set("view engine", "ejs");

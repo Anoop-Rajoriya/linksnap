@@ -3,59 +3,63 @@ const {
   getUrlsService,
   createUrlService,
   redirectUrlService,
+  getUrlDetailsService,
 } = require("../services/url.service");
-
-// const test = (req, res) => {
-//   const { page } = req.params;
-//   console.log("page", page);
-//   const pageData = {
-//     title: "Home",
-//     routes: [],
-//     urls: [
-//       {
-//         shortUrl: "http://localhost:3000/lfjls",
-//         isActive: false,
-//         originalUrl: "googel.com",
-//         totalClicks: 4,
-//         createdAt: new Date().toISOString(),
-//         expiresAt: new Date().toISOString(),
-//         shortCode: "lfjls",
-//       },
-//     ],
-//     error: "hello this test error",
-//     success: null,
-//   };
-
-//   res.render("pages/index", pageData);
-// };
 
 const renderHomePage = asyncHandler(async (req, res) => {
   const pageResponse = {
+    pageTitle: "LinkSnap - Home",
     route: "Home",
     routes: [],
-    urls: [],
-    success: req.query.success,
-    error: req.query.error,
+    data: {
+      success: req.query.success,
+      error: req.query.error,
+      urls: null,
+    },
   };
 
   try {
     const { data } = await getUrlsService();
-    pageResponse.urls = data;
+    pageResponse.data.urls = data;
   } catch (error) {
     console.error("Error in renderHomePage(): ", error);
-    pageResponse.error = error.message;
+    pageResponse.data.error = error.message;
   }
 
   return res.render("pages/index", pageResponse);
 });
 
-const renderDetailPage = asyncHandler((req, res) => {});
+const renderDetailPage = asyncHandler(async (req, res) => {
+  const { shortCode } = req.params || {};
+  const pageResponse = {
+    pageTitle: "LinkSnap - URL Details",
+    route: "URL",
+    routes: [],
+    data: {
+      error: req.query.error,
+      url: null,
+    },
+  };
+
+  try {
+    if (!shortCode || !shortCode.trim()) {
+      throw new Error("Shortcode required");
+    }
+
+    const { data } = await getUrlDetailsService(shortCode);
+    pageResponse.data.url = data;
+  } catch (error) {
+    pageResponse.error = error.message;
+  }
+
+  res.render("pages/urlDetails", pageResponse);
+});
 
 const handleUrlShorten = asyncHandler(async (req, res) => {
   const { url } = req.body || {};
 
   try {
-    if (!url && !url.trim()) {
+    if (!url || !url.trim()) {
       throw new Error("URL required");
     }
     const { message } = await createUrlService(url);
@@ -75,7 +79,7 @@ const handleRedirect = asyncHandler(async (req, res) => {
   const { shortCode } = req.params || {};
 
   try {
-    if (!shortCode && !shortCode.trim()) {
+    if (!shortCode || !shortCode.trim()) {
       throw new Error("ShortCode required");
     }
 
@@ -92,9 +96,21 @@ const handleRedirect = asyncHandler(async (req, res) => {
   }
 });
 
+const test = asyncHandler(async (req, res) => {
+  const pageData = {
+    pageTitle: "LinkSnap - Home",
+    route: "Home",
+    routes: [],
+    data: {},
+  };
+
+  res.render("pages/index", pageData);
+});
+
 module.exports = {
   renderHomePage,
   renderDetailPage,
   handleUrlShorten,
   handleRedirect,
+  test,
 };

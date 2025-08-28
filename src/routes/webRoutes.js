@@ -6,14 +6,15 @@ const {
   renderDetailPage,
   handleUrlShorten,
   handleRedirect,
+  test,
 } = require("../controllers/web.controller");
 
 // URLs
 router.get("/", renderHomePage);
-router.get("/detail/:shortCode", renderDetailPage);
+router.get("/details/:shortCode", renderDetailPage);
 
 router.post("/shorten", handleUrlShorten);
 
-router.get("/:shortCode", handleRedirect);
+router.get("/r/:shortCode", handleRedirect);
 
 module.exports = router;
