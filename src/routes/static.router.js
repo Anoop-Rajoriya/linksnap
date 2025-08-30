@@ -3,14 +3,14 @@ const router = express.Router();
 
 const {
   renderHome,
-  renderUrls,
-  renderRegister,
+  renderDashboard,
   renderLogin,
-} = require("../controllers/web.controller");
+  renderRegister,
+} = require("../controllers/static.controller");
 
 router.get("/", renderHome);
-router.get("/urls", renderUrls);
-router.get("/register", renderRegister);
+router.get("/dashboard", renderDashboard);
 router.get("/login", renderLogin);
+router.get("/register", renderRegister);
 
 module.exports = router;

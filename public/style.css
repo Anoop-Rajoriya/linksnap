@@ -1,0 +1,66 @@
+:root {
+  --bg: #0e0f13;
+  --card: #1a1c23;
+  --txt: #e6eaf0;
+  --sectxt: #a1a6b3;
+  --acc: #4fc1ff;
+  --acctxt: #0e0f13;
+  --brd: #2a2d36;
+  --link: #5ec9ff;
+  --err: #ff5c5c; /* error red */
+  --ok: #4ade80; /* success green */
+  --ff: "Inter", sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+  background-color: var(--brd);
+  font-family: var(--ff);
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+* {
+  font-size: medium;
+  color: var(--txt);
+}
+
+/* Page Styles */
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+header .logo {
+  font-size: large;
+  font-weight: bold;
+  color: var(--acc);
+}
+header nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+header nav a {
+  font-size: small;
+  color: var(--link);
+  cursor: pointer;
+}
+main {
+  flex: 1;
+  padding-block: 20px;
+}
+footer {
+  text-align: center;
+  font-size: smaller;
+  color: var(--sectxt);
+}
+

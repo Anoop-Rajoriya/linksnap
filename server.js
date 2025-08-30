@@ -1,5 +1,4 @@
-const env = require("./src/config/environment");
-const connectDB = require("./src/config/db");
+const { env, connectDB } = require("./src/config");
 const app = require("./src/app");
 
 connectDB();
