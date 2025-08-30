@@ -1,0 +1,220 @@
+:root {
+  --bg: #0b0f10; /* bg-color */
+  --card: #11161a; /* card-color */
+  --txt: #dbe1e8; /* text-color */
+  --sectxt: #9aa4ad; /* secondary-text */
+  --link: #4fc1ff; /* link-color (cyan, terminal-ish) */
+  --err: #ff5c57; /* error-color */
+  --ok: #5af78e; /* success-color */
+  --brd: #223036; /* border */
+  --acc: #0f3d2e; /* accent-bg (deep green panel) */
+  --acctxt: #a8ffb5; /* accent-text */
+  --ff: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono",
+    monospace; /* font */
+}
+
+html,
+body {
+  background-color: var(--bg);
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  padding: 20px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--ff);
+}
+
+* {
+  box-sizing: border-box;
+  color: var(--txt);
+  font-size: medium;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+header > h1 {
+  font-size: small;
+  font-weight: bold;
+  color: var(--acctxt);
+}
+
+header nav {
+  display: flex;
+  gap: 20px;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding-block: 20px;
+}
+footer {
+  text-align: center;
+  font-size: smaller;
+  color: var(--sectxt);
+}
+
+a {
+  text-decoration: none;
+  color: var(--link);
+  font-size: smaller;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+input,
+button {
+  background-color: var(--card);
+  color: var(--txt);
+  outline: none;
+  border: 2px solid var(--brd);
+}
+
+.input-field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.input-field label {
+  font-size: smaller;
+}
+
+.input-field input {
+  font-size: medium;
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+
+.note {
+  font-size: smaller;
+  color: var(--sectxt);
+}
+
+.form-button {
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.form-button:hover {
+  border-color: var(--link);
+  color: var(--link);
+}
+
+.form-card {
+  max-width: 700px;
+  width: 100%;
+  border: 2px solid var(--brd);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  padding-inline: 20px;
+  padding-block-end: 20px;
+  margin-inline: auto;
+}
+
+.form-heading {
+  font-size: larger;
+  font-weight: bold;
+  text-align: center;
+  color: var(--acctxt);
+}
+
+.alert {
+  font-size: smaller;
+  font-weight: bold;
+  text-transform: capitalize;
+  padding: 10px 20px;
+  margin-block: 10px;
+  border: 2px solid transparent;
+  border-radius: 10px;
+}
+.alert.success {
+  color: var(--ok);
+  border-color: var(--ok);
+}
+.alert.error {
+  color: var(--err);
+  border-color: var(--err);
+}
+
+/*************************
+    Index Styles
+*************************/
+
+.index form .expiry {
+  margin-block-start: 20px;
+}
+
+/*************************
+    Register Styles
+*************************/
+
+.register form .input-field ~ .input-field,
+.register form button,
+.login form .input-field ~ .input-field,
+.login form button {
+  margin-top: 20px;
+}
+
+.register form .note,
+.login form .note {
+  text-align: center;
+}
+
+.register form .note a,
+.login form .note a {
+  text-transform: capitalize;
+  font-weight: bold;
+}
+
+/*************************
+    Urls Styles
+*************************/
+
+.urls h2 {
+  font-size: larger;
+  font-weight: bold;
+  text-align: center;
+  text-transform: capitalize;
+  color: var(--acctxt);
+}
+.urls ul {
+  display: flex;
+  flex-direction: column;
+  max-width: 700px;
+  width: 100%;
+  margin-inline: auto;
+  border-top: 2px solid var(--brd);
+  padding: 20px 0px;
+  gap: 20px;
+}
+.urls li {
+  list-style: none;
+  padding: 10px 20px;
+  border: 2px solid var(--brd);
+  border-radius: 10px;
+  background-color: var(--card);
+}
+.urls li p {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.urls li span,
+.urls li a {
+  width: 50%;
+}

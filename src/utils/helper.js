@@ -4,15 +4,20 @@ const asyncHandler = (fn) => {
   };
 };
 
-const formateDate = (date) => {
-  return new Date(date).toLocaleString("en-US", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    hour12: true, // Set to false for 24-hour format
-  });
-};
+class WebResponse {
+  constructor({ routes = [], messages = null, data = null }) {
+    this.routes = routes;
+    this.messages = messages;
+    this.data = data;
+  }
+}
 
-module.exports = { asyncHandler, formateDate };
+class WebError {
+  constructor({ statusCode = 404, error = "Page Not Found", message }) {
+    this.statusCode = statusCode;
+    this.error = error;
+    this.message = message;
+  }
+}
+
+module.exports = { asyncHandler, WebResponse, WebError };

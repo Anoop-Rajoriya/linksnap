@@ -3,41 +3,43 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LinkSnap - Home</title>
+    <title>LinkSnap - Login</title>
     <link rel="stylesheet" href="/base.css" />
   </head>
   <body>
     <%- include("../partials/header") %>
-    <main class="index">
+    <main class="login">
       <% if(messages && messages.success){ %>
       <p class="alert success">Success: <%= messages.success %></p>
       <% } %> <% if(messages && messages.error){ %>
       <p class="alert error">Error: <%= messages.error %></p>
       <% } %>
       <form action="" class="form-card">
-        <h2 class="form-heading">Shorten Long URLs</h2>
-        <div class="url input-field">
-          <label for="url">Urls *</label>
+        <h2 class="form-heading">Login your account</h2>
+        <div class="email input-field">
+          <label for="email">Email *</label>
           <input
-            type="url"
-            name="url"
-            id="url"
-            placeholder="Long Url..."
+            type="email"
+            name="email"
+            id="email"
             required
+            placeholder="Your Email..."
           />
         </div>
-        <div class="expiry input-field">
-          <label for="expiry">Expiry</label>
+        <div class="password input-field">
+          <label for="password">Password *</label>
           <input
-            type="number"
-            name="expiry"
-            id="expiry"
-            placeholder="Expiry Days..."
-            value="2"
+            type="text"
+            name="password"
+            id="password"
+            required
+            placeholder="Your Password..."
           />
         </div>
-        <p class="note">If expiry is empty short url is permanent.</p>
-        <button class="form-button">Shorten</button>
+        <button class="form-button">Login</button>
+        <p class="note">
+          If you don't have account <a href="/register">register</a>.
+        </p>
       </form>
     </main>
     <%- include("../partials/footer") %>

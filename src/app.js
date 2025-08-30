@@ -3,7 +3,6 @@ const cors = require("cors");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 const path = require("path");
-const ejs = require("ejs");
 
 const app = express();
 
@@ -44,7 +43,7 @@ app.set("trust proxy", true);
 const urlRoutes = require("./routes/urlRoutes");
 const webRoutes = require("./routes/webRoutes");
 
-app.use("/api/url", urlRoutes);
+app.use("/api", urlRoutes);
 app.use(webRoutes);
 
 // Error handling middlewares
@@ -53,10 +52,7 @@ const {
   handlePageNotFound,
 } = require("./middlewares/errorHandler");
 
-// Error handler
 app.use(handleError);
-
-// 404 handler
 app.use(handlePageNotFound);
 
 module.exports = app;

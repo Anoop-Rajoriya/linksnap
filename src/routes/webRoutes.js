@@ -2,19 +2,15 @@ const express = require("express");
 const router = express.Router();
 
 const {
-  renderHomePage,
-  renderDetailPage,
-  handleUrlShorten,
-  handleRedirect,
-  test,
+  renderHome,
+  renderUrls,
+  renderRegister,
+  renderLogin,
 } = require("../controllers/web.controller");
 
-// URLs
-router.get("/", renderHomePage);
-router.get("/details/:shortCode", renderDetailPage);
-
-router.post("/shorten", handleUrlShorten);
-
-router.get("/r/:shortCode", handleRedirect);
+router.get("/", renderHome);
+router.get("/urls", renderUrls);
+router.get("/register", renderRegister);
+router.get("/login", renderLogin);
 
 module.exports = router;
