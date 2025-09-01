@@ -1,8 +1,0 @@
-<header>
-  <a href="/" class="logo"> LinkSnap </a>
-  <nav>
-    <% if(routes && routes.length > 0){ routes.forEach( function(route) { %>
-    <a href="<%= route.path %>"> <%= route.name %> </a>
-    <% })} %>
-  </nav>
-</header>
