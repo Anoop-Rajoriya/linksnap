@@ -4,4 +4,17 @@ const asyncHandler = (fn) => {
   };
 };
 
-module.exports = { asyncHandler };
+const validateAuthInput = ({ name, email, password }, register = false) => {
+  if (register && (!name || name.trim() === "")) {
+    return "Name is required";
+  }
+  if (!email || email.trim() === "") {
+    return "Email is required";
+  }
+  if (!password || password.trim() === "") {
+    return "Password is requried";
+  }
+  return null;
+};
+
+module.exports = { asyncHandler, validateAuthInput };

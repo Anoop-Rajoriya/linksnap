@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LinkSnap - Login</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <main class="register">
+      <h1 class="page-heading">Register your account</h1>
+      <form class="card" action="/register" method="post">
+        <%- include("./partials/alert") %>
+        <div class="form-field">
+          <label for="name">Name *</label>
+          <input
+            class="input"
+            type="text"
+            name="name"
+            id="name"
+            required
+            placeholder="Your Name..."
+          />
+        </div>
+        <div class="form-field">
+          <label for="email">Email *</label>
+          <input
+            class="input"
+            type="email"
+            name="email"
+            id="email"
+            required
+            placeholder="Your Email..."
+          />
+        </div>
+        <div class="form-field">
+          <label for="password">Password *</label>
+          <input
+            class="input"
+            type="text"
+            name="password"
+            id="password"
+            required
+            placeholder="Your Password..."
+          />
+        </div>
+        <button class="button">Register</button>
+        <p>have an account <a href="/login">Login</a></p>
+      </form>
+    </main>
+    <%- include("./partials/footer") %>
+  </body>
+</html>

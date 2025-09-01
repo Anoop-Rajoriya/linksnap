@@ -1,5 +1,6 @@
 const express = require("express");
 const path = require("path");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 
@@ -8,6 +9,9 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Cookies parsing middleware
+app.use(cookieParser());
+
 // Static files
 app.use(express.static("public"));
 
@@ -15,20 +19,12 @@ app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.set("views", path.join(path.dirname(__dirname), "views"));
 
-// Static routes
-const static = require("./routes/static.router");
-app.set(static);
-
-// Url routes
-const url = require("./routes/static.router");
-app.set("/url", url);
-
-// User routes
-const user = require("./routes/static.router");
-app.set("/user", user);
+// Service routes
+const router = require("./routes");
+app.use(router);
 
 // Error Handler
-const { error, notFound } = require("./middlewares/errorMiddleware");
+const { error, notFound } = require("./middlewares/error.middleware");
 app.use(error);
 app.use(notFound);
 

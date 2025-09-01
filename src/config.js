@@ -7,6 +7,7 @@ const env = {
   baseUrl: process.env.BASE_UR || "http://localhost:3000",
   appName: process.env.APPNAME || "LinkSnap",
   mongodbUri: process.env.MONGODB_URI,
+  jwtSecret: process.env.JWT_SECRET
 };
 
 const connectDB = () => {
