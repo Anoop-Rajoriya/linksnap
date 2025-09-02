@@ -19,7 +19,13 @@
         />
         <button>Shorten</button>
       </form>
-      <p class="">Enter long url to generate short url.</p>
+      <% if(messages && messages.error){ %>
+      <p class="error"><%= messages.error %></p>
+      <% } else if(messages && messages.success){ %>
+      <p class="success"><%= messages.success %></p>
+      <% } else { %>
+      <p>Enter long url to generate short url.</p>
+      <% } %>
     </div>
   </body>
 </html>
