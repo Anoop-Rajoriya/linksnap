@@ -1,0 +1,27 @@
+{
+  "name": "linksnap",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Anoop-Rajoriya/linksnap.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Anoop-Rajoriya/linksnap/issues"
+  },
+  "homepage": "https://github.com/Anoop-Rajoriya/linksnap#readme",
+  "description": "",
+  "dependencies": {
+    "dotenv": "^17.2.1",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "mongoose": "^8.18.0",
+    "nodemon": "^3.1.10"
+  }
+}

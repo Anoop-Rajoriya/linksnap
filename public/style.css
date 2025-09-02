@@ -1,0 +1,105 @@
+:root {
+  --bg: #121212; /* background */
+  --card: #1e1e1e; /* card / elevated surfaces */
+  --txt: #e0e0e0; /* primary text */
+  --sectxt: #a0a0a0; /* secondary text */
+  --accent: #3b82f6; /* accent / links / buttons */
+  --accent-txt: #ffffff; /* text on accent */
+  --border: #2a2a2a; /* borders / dividers */
+  --ok: #22c55e; /* success */
+  --err: #ef4444; /* error */
+  --warn: #f59e0b; /* warning */
+  --ff: "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  color: var(--txt);
+  font-size: medium;
+  margin: 0;
+}
+
+html,
+body {
+  height: 100%;
+  background-color: var(--bg);
+  margin: 0;
+  font-family: var(--ff);
+}
+
+.app {
+  max-width: 800px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  margin-inline: auto;
+}
+
+h1 {
+  font-size: larger;
+  font-weight: bold;
+  text-align: center;
+  color: var(--accent);
+  padding-block-end: 10px;
+}
+
+input {
+  padding: 10px 15px;
+  background-color: var(--card);
+  border: 2px solid var(--border);
+  border-radius: 5px;
+  font-size: small;
+}
+
+button {
+  padding: 10px 15px;
+  border: 2px solid var(--accent);
+  background-color: var(--accent);
+  color: var(--accent-txt);
+  border-radius: 5px;
+}
+
+.form {
+  padding-block-start: 10px;
+  padding-block-start: 20px;
+}
+
+form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+form input {
+  flex: 1;
+}
+.form p {
+  padding-block: 10px;
+  margin: 0;
+  font-size: smaller;
+  text-transform: capitalize;
+  color: var(--sectxt);
+}
+.form p.error {
+  color: var(--err);
+}
+.form p.success {
+  color: var(--ok);
+}
+
+.Error {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.Error h1 {
+  color: var(--err);
+}
+
+.Error p {
+  color: var(--warn);
+  text-align: center;
+}
