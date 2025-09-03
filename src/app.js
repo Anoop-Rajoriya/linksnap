@@ -4,11 +4,13 @@ const path = require("path");
 const root = path.dirname(__dirname);
 
 const {
-  renderHome,
-  createShortUrl,
-  handleUrlRedirect,
+  renderHomePage,
+  renderDashboardPage,
+  renderLoginPage,
+  renderRegisterPage,
 } = require("./controllers/web");
-const handleError = require("./middlewares/handleError");
+
+const { handleError, notFound } = require("./middlewares/handleError");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(root, "public")));
@@ -17,13 +19,13 @@ app.set("view engine", "ejs");
 app.set("views", path.join(root, "views"));
 
 // Routes
-app.get("/", renderHome);
-
-app.post("/shorten", createShortUrl);
-
-app.get("/r/:code", handleUrlRedirect);
+app.get("/", renderHomePage);
+app.get("/dashboard", renderDashboardPage);
+app.get("/login", renderLoginPage);
+app.get("/register", renderRegisterPage);
 
 // Errors
 app.use(handleError);
+app.use(notFound);
 
 module.exports = app;

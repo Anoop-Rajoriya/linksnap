@@ -1,80 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LinkSnap - Home</title>
-    <link rel="stylesheet" href="/style.css" />
-  </head>
-  <body class="app">
-    <h1>LinkSnap: URLs Shortner</h1>
-    <div class="form">
-      <form action="/shorten" method="post">
-        <input
-          type="text"
-          name="url"
-          id="url"
-          placeholder="Long Url..."
-          required
-        />
-        <button>Shorten</button>
-      </form>
-      <% if(messages && messages.error){ %>
-      <p class="error"><%= messages.error %></p>
-      <% } else if(messages && messages.success){ %>
-      <p class="success"><%= messages.success %></p>
-      <% } else { %>
-      <p>Enter long url to generate short url.</p>
-      <% } %>
-    </div>
-    <div class="analytics">
-      <h2>Urls Analytics</h2>
-      <ul>
-        <li>
-          <span>Total Urls:</span>
-          <span><%= urlsAnalytics.totalUrls %></span>
-        </li>
-        <li>
-          <span>Total Clicks:</span>
-          <span><%= urlsAnalytics.totalClicks %></span>
-        </li>
-        <li>
-          <span>Weekly Clicks:</span>
-          <span><%= urlsAnalytics.weeklyClicks %></span>
-        </li>
-        <li>
-          <span>Daily Clicks:</span>
-          <span><%= urlsAnalytics.dailyClicks %></span>
-        </li>
-      </ul>
-    </div>
+<%- include("./partials/header", { title: "Home", user }) %>
 
-    <div class="urls">
-      <h2>Your Urls</h2>
-      <ul>
-        <% if(urls.length > 0){ urls.forEach(function (url){ %>
-        <li>
-          <p>
-            <span>Short Url:</span>
-            <a href="<%= url.shortUrl %>" target="_blank"><%=url.shortUrl %></a>
-          </p>
-          <p>
-            <span>Url:</span>
-            <a href="<%= url.url %>" target="_blank"><%=url.url %></a>
-          </p>
-          <p>
-            <span>Total Clicks</span>
-            <span><%= url.clicks %></span>
-          </p>
-          <p>
-            <span>Created</span>
-            <span><%= new Date(url.createdAt).toLocaleString() %></span>
-          </p>
-        </li>
-        <% })} else{ %>
-        <li class="note">No Url Found</li>
-        <% } %>
-      </ul>
+<section class="hero">
+  <div class="hero-content">
+    <h1>Shorten your links with <span class="highlight">LinkSnap</span></h1>
+    <p class="subtitle">
+      Paste a long URL below and get a short link instantly.
+    </p>
+
+    <form action="/shorten" method="post" class="shorten-form">
+      <input type="url" name="url" placeholder="Enter long URL..." required />
+      <button type="submit">Shorten</button>
+    </form>
+
+    <% if(messages && messages.error){ %>
+    <p class="alert error"><%= messages.error %></p>
+    <% } else if(messages && messages.success){ %>
+    <p class="alert success"><%= messages.success %></p>
+    <% } else { %>
+    <p class="note">Your shortened links will appear in your dashboard.</p>
+    <% } %>
+  </div>
+</section>
+
+<section class="features">
+  <h2>Why LinkSnap?</h2>
+  <div class="feature-grid">
+    <div class="feature-card">
+      <h3>🔗 Easy</h3>
+      <p>Shorten links in one click, no extra steps needed.</p>
     </div>
-  </body>
-</html>
+    <div class="feature-card">
+      <h3>📊 Analytics</h3>
+      <p>Track total, weekly, and daily clicks on your URLs.</p>
+    </div>
+    <div class="feature-card">
+      <h3>🔒 Secure</h3>
+      <p>All links are protected with user accounts and privacy settings.</p>
+    </div>
+  </div>
+</section>
+
+<%- include("./partials/footer") %>

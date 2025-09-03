@@ -1,13 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Error</title>
-    <link rel="stylesheet" href="/style.css" />
-  </head>
-  <body class="Error">
-    <h1>Error</h1>
-    <p>Server Internal Error.</p>
-  </body>
-</html>
+<%- include("./partials/header", { title: "Error", user: null }) %>
+
+<section class="error-page">
+  <div class="error-card">
+    <h1>⚠️ Oops!</h1>
+    <p class="subtitle"><%= message || "Something went wrong." %></p>
+
+    <% if(status){ %>
+    <p class="status">Error Code: <%= status %></p>
+    <% } %>
+
+    <div class="actions">
+      <a href="/" class="btn">Go Home</a>
+      <% if(user){ %>
+      <a href="/dashboard" class="btn secondary">Dashboard</a>
+      <% } else { %>
+      <a href="/login" class="btn secondary">Login</a>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<%- include("./partials/footer") %>

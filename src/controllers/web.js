@@ -1,46 +1,46 @@
 const { asyncHandler } = require("../utils");
-const {
-  createUrlService,
-  urlRedirectService,
-  getUrlsService,
-  getUrlsAnalyticsService,
-} = require("../services/url");
+const { getUrlsService, getUrlsAnalyticsService } = require("../services/url");
 
-const renderHome = asyncHandler(async (req, res) => {
+const renderHomePage = asyncHandler(async (req, res) => {
+  const user = req.user || true;
   const messages = {
-    error: req.query.err,
-    success: req.query.succ,
+    success: req.query.success,
+    error: req.query.error,
   };
+  res.render("index", { title: "Home", user, messages });
+});
+
+const renderDashboardPage = asyncHandler(async (req, res) => {
+  const user = req.user || { name: "Test Name" };
   const { data: urls } = await getUrlsService();
   const { data: urlsAnalytics } = await getUrlsAnalyticsService();
 
-  console.log("urls:", urls);
-  console.log("analytics:", urlsAnalytics);
-
-  res.render("index", { messages, urls, urlsAnalytics });
+  res.render("dashboard", { title: "Dashboard", user, urls, urlsAnalytics });
 });
 
-const createShortUrl = asyncHandler(async (req, res) => {
-  const { url } = req.body || {};
+const renderLoginPage = asyncHandler(async (req, res) => {
+  const user = req.user || null;
+  const messages = {
+    success: req.query.success,
+    error: req.query.error,
+  };
 
-  try {
-    const { message, data } = await createUrlService(url);
-    res.redirect(302, `/?succ=${encodeURIComponent(message)}`);
-  } catch (error) {
-    console.error(error);
-    res.redirect(302, `/?err=${encodeURIComponent(error.message)}`);
-  }
+  res.render("login", { title: "Login", user, messages });
 });
 
-const handleUrlRedirect = asyncHandler(async (req, res) => {
-  const { code } = req.params || {};
+const renderRegisterPage = asyncHandler(async (req, res) => {
+  const user = req.user || null;
+  const messages = {
+    success: req.query.success,
+    error: req.query.error,
+  };
 
-  try {
-    const url = await urlRedirectService(code);
-    res.redirect(302, url);
-  } catch (error) {
-    throw error;
-  }
+  res.render("register", { title: "Register", user, messages });
 });
 
-module.exports = { renderHome, createShortUrl, handleUrlRedirect };
+module.exports = {
+  renderHomePage,
+  renderDashboardPage,
+  renderLoginPage,
+  renderRegisterPage,
+};

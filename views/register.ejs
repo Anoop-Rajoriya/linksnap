@@ -1,0 +1,27 @@
+<%- include("./partials/header", { title: "Register", user }) %>
+
+<section class="auth">
+  <div class="auth-card">
+    <h1>Create Account</h1>
+    <p class="subtitle">Join LinkSnap and start shortening URLs securely.</p>
+
+    <form action="/register" method="post" class="auth-form">
+      <input type="text" name="name" placeholder="Full Name" required />
+      <input type="email" name="email" placeholder="Email" required />
+      <input type="password" name="password" placeholder="Password" required />
+      <button type="submit">Register</button>
+    </form>
+
+    <% if(messages && messages.error){ %>
+    <p class="alert error"><%= messages.error %></p>
+    <% } else if(messages && messages.success){ %>
+    <p class="alert success"><%= messages.success %></p>
+    <% } %>
+
+    <p class="switch">
+      Already have an account? <a href="/login">Login here</a>
+    </p>
+  </div>
+</section>
+
+<%- include("./partials/footer") %>
