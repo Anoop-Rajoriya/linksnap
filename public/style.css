@@ -44,6 +44,13 @@ h1 {
   padding-block-end: 10px;
 }
 
+h2 {
+  font-size: large;
+  font-weight: bold;
+  color: var(--accent);
+  padding-block-end: 20px;
+}
+
 input {
   padding: 10px 15px;
   background-color: var(--card);
@@ -85,6 +92,75 @@ form input {
 }
 .form p.success {
   color: var(--ok);
+}
+
+.urls {
+  margin-top: 20px;
+}
+
+.urls ul {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0px;
+}
+
+.urls ul li {
+  list-style: none;
+  margin: 0;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+  background-color: var(--card);
+}
+
+.urls ul li p {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding-block: 10px;
+}
+
+.urls ul li span {
+  font-weight: bold;
+}
+.urls ul li a {
+  color: var(--accent);
+}
+
+.urls ul li.note {
+  text-align: center;
+  color: var(--sectxt);
+  padding: 20px;
+}
+
+.analytics {
+  margin-top: 20px;
+}
+
+.analytics ul {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  background-color: var(--card);
+}
+.analytics ul li {
+  list-style: none;
+  padding-block: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.analytics ul li ~ li {
+  border-top: 2px solid var(--border);
+}
+
+.analytics ul li span {
+  font-weight: bold;
 }
 
 .Error {

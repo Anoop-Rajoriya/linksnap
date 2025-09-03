@@ -3,7 +3,11 @@ const app = express();
 const path = require("path");
 const root = path.dirname(__dirname);
 
-const { renderHome, createShortUrl } = require("./controllers/web");
+const {
+  renderHome,
+  createShortUrl,
+  handleUrlRedirect,
+} = require("./controllers/web");
 const handleError = require("./middlewares/handleError");
 
 app.use(express.urlencoded({ extended: true }));
@@ -16,6 +20,8 @@ app.set("views", path.join(root, "views"));
 app.get("/", renderHome);
 
 app.post("/shorten", createShortUrl);
+
+app.get("/r/:code", handleUrlRedirect);
 
 // Errors
 app.use(handleError);

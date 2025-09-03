@@ -53,4 +53,11 @@ const generateUniqueCode = async () => {
   throw new Error("Failed to generate a unique code after retries");
 };
 
-module.exports = { asyncHandler, formatUrl, generateUniqueCode };
+const isValidCode = (code, length = 6) => {
+  if (typeof code !== "string" || code === "") return false;
+
+  const regex = new RegExp(`^[a-zA-Z0-9]{${length}}$`);
+  return regex.test(code);
+};
+
+module.exports = { asyncHandler, formatUrl, generateUniqueCode, isValidCode };
