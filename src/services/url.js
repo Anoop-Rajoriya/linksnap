@@ -85,7 +85,7 @@ const getUrlsAnalyticsService = async () => {
       $group: {
         _id: null,
         totalClicks: { $sum: 1 },
-        dailyClicks: {
+        todayClicks: {
           $sum: {
             $cond: [{ $gte: ["$clicks", oneDayAgo] }, 1, 0],
           },
@@ -102,7 +102,7 @@ const getUrlsAnalyticsService = async () => {
       $project: {
         _id: 0,
         totalClicks: 1,
-        dailyClicks: 1,
+        todayClicks: 1,
         weeklyClicks: 1,
         totalUrls: { $size: "$urls" },
       },

@@ -2,7 +2,7 @@ const { asyncHandler } = require("../utils");
 const { getUrlsService, getUrlsAnalyticsService } = require("../services/url");
 
 const renderHomePage = asyncHandler(async (req, res) => {
-  const user = req.user || true;
+  const user = req.user || null;
   const messages = {
     success: req.query.success,
     error: req.query.error,
@@ -21,6 +21,7 @@ const renderHomePage = asyncHandler(async (req, res) => {
 });
 
 const renderDashboardPage = asyncHandler(async (req, res) => {
+  const { username } = req.user;
   const { data: urls } = await getUrlsService();
   const { data: urlsAnalytics } = await getUrlsAnalyticsService();
   const routes = [
@@ -30,7 +31,7 @@ const renderDashboardPage = asyncHandler(async (req, res) => {
 
   res.render("dashboard", {
     title: "Dashboard",
-    name: "Test Name",
+    name: username,
     routes,
     urls,
     urlsAnalytics,

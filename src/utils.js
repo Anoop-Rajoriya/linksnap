@@ -60,4 +60,40 @@ const isValidCode = (code, length = 6) => {
   return regex.test(code);
 };
 
-module.exports = { asyncHandler, formatUrl, generateUniqueCode, isValidCode };
+const validateAuthInput = ({ username, email, password }, isLogin = false) => {
+  if (!isLogin) {
+    if (!username || username.length < 3) {
+      return {
+        valid: false,
+        error: "Username must be at least 3 characters long",
+      };
+    } else if (/\s/.test(username)) {
+      return { valid: false, error: "Username must not contain spaces" };
+    }
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!email || !emailRegex.test(email)) {
+    return { valid: false, error: "Please provide a valid email address" };
+  }
+
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&])[A-Za-z\d@#$%^&]{6,}$/;
+
+  if (!password || !passwordRegex.test(password)) {
+    return {
+      valid: false,
+      error: "Combination required a-z, A-Z, 0-9, and (@#$%^&)",
+    };
+  }
+
+  return { valid: true, error: null };
+};
+
+module.exports = {
+  asyncHandler,
+  formatUrl,
+  generateUniqueCode,
+  isValidCode,
+  validateAuthInput,
+};

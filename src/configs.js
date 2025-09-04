@@ -5,6 +5,7 @@ const env = {
   port: process.env.PORT,
   baseUrl: process.env.BASEURL,
   dbUri: process.env.MONGODB_URI,
+  authSecret: process.env.AUTHSECRET,
 };
 
 const connectDB = () => {
