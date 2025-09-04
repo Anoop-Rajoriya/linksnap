@@ -7,35 +7,55 @@ const renderHomePage = asyncHandler(async (req, res) => {
     success: req.query.success,
     error: req.query.error,
   };
-  res.render("index", { title: "Home", user, messages });
+  const routes = user
+    ? [
+        { path: "/dashboard", name: "Dashboard" },
+        { path: "/logout", name: "Logout" },
+      ]
+    : [
+        { path: "/login", name: "Login" },
+        { path: "/register", name: "Register" },
+      ];
+
+  res.render("index", { title: "Home", messages, routes });
 });
 
 const renderDashboardPage = asyncHandler(async (req, res) => {
-  const user = req.user || { name: "Test Name" };
   const { data: urls } = await getUrlsService();
   const { data: urlsAnalytics } = await getUrlsAnalyticsService();
+  const routes = [
+    { path: "/", name: "Home" },
+    { path: "/logout", name: "Logout" },
+  ];
 
-  res.render("dashboard", { title: "Dashboard", user, urls, urlsAnalytics });
+  res.render("dashboard", {
+    title: "Dashboard",
+    name: "Test Name",
+    routes,
+    urls,
+    urlsAnalytics,
+  });
 });
 
 const renderLoginPage = asyncHandler(async (req, res) => {
-  const user = req.user || null;
   const messages = {
     success: req.query.success,
     error: req.query.error,
   };
+  const routes = [{ path: "/", name: "Home" }];
 
-  res.render("login", { title: "Login", user, messages });
+  res.render("login", { title: "Login", routes, messages });
 });
 
 const renderRegisterPage = asyncHandler(async (req, res) => {
-  const user = req.user || null;
   const messages = {
     success: req.query.success,
     error: req.query.error,
   };
 
-  res.render("register", { title: "Register", user, messages });
+  const routes = [{ path: "/", name: "Home" }];
+
+  res.render("register", { title: "Register", routes, messages });
 });
 
 module.exports = {

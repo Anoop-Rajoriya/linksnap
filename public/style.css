@@ -231,6 +231,9 @@ footer {
 .url-card p {
   margin: 0.25rem 0;
 }
+.url-card a {
+  color: var(--accent);
+}
 
 .url-card .label {
   font-weight: 600;

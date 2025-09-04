@@ -1,8 +1,8 @@
-<%- include("./partials/header", { title: "Dashboard", user }) %>
+<%- include("./partials/header") %>
 
 <section class="dashboard">
   <div class="welcome">
-    <h1>Welcome back, <%= user.name %> 👋</h1>
+    <h1>Welcome back, <%= name %> 👋</h1>
     <p class="subtitle">Here’s a quick overview of your links and activity.</p>
   </div>
 
@@ -32,24 +32,27 @@
   <div class="urls">
     <h2>Your Links</h2>
     <% if(urls.length > 0){ %>
-      <div class="url-grid">
-        <% urls.forEach(function(url){ %>
-          <div class="url-card">
-            <p><span class="label">Short:</span> 
-              <a href="<%= url.shortUrl %>" target="_blank"><%= url.shortUrl %></a>
-            </p>
-            <p><span class="label">Original:</span> 
-              <a href="<%= url.url %>" target="_blank"><%= url.url %></a>
-            </p>
-            <p><span class="label">Clicks:</span> <%= url.clicks %></p>
-            <p><span class="label">Created:</span> 
-              <%= new Date(url.createdAt).toLocaleString() %>
-            </p>
-          </div>
-        <% }) %>
+    <div class="url-grid">
+      <% urls.forEach(function(url){ %>
+      <div class="url-card">
+        <p>
+          <span class="label">Short:</span>
+          <a href="<%= url.shortUrl %>" target="_blank"><%= url.shortUrl %></a>
+        </p>
+        <p>
+          <span class="label">Original:</span>
+          <a href="<%= url.url %>" target="_blank"><%= url.url %></a>
+        </p>
+        <p><span class="label">Clicks:</span> <%= url.clicks %></p>
+        <p>
+          <span class="label">Created:</span>
+          <%= new Date(url.createdAt).toLocaleString() %>
+        </p>
       </div>
+      <% }) %>
+    </div>
     <% } else { %>
-      <p class="note">You haven’t shortened any links yet.</p>
+    <p class="note">You haven’t shortened any links yet.</p>
     <% } %>
   </div>
 </section>
