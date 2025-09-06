@@ -8,6 +8,7 @@
 
   <!-- Analytics Section -->
   <div class="analytics">
+    <% if(urlsAnalytics){ %>
     <div class="analytics-grid">
       <div class="analytics-card">
         <h3>Total URLs</h3>
@@ -26,6 +27,9 @@
         <p><%= urlsAnalytics.todayClicks %></p>
       </div>
     </div>
+    <% }else{ %>
+    <p class="note">No analytics data found</p>
+    <% } %>
   </div>
 
   <!-- URL List Section -->

@@ -190,6 +190,10 @@ footer {
   margin-bottom: 2rem;
 }
 
+.analytics .note {
+  text-align: center;
+}
+
 .analytics-card {
   background: var(--card);
   border: 1px solid var(--border);
@@ -211,6 +215,9 @@ footer {
 }
 
 /* URL List */
+.urls{
+  border-top: 2px solid var(--border);
+}
 .urls h2 {
   margin-bottom: 1rem;
 }

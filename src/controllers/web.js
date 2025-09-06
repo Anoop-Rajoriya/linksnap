@@ -21,9 +21,9 @@ const renderHomePage = asyncHandler(async (req, res) => {
 });
 
 const renderDashboardPage = asyncHandler(async (req, res) => {
-  const { username } = req.user;
-  const { data: urls } = await getUrlsService();
-  const { data: urlsAnalytics } = await getUrlsAnalyticsService();
+  const user = req.user;
+  const { data: urls } = await getUrlsService(user);
+  const { data: urlsAnalytics } = await getUrlsAnalyticsService(user);
   const routes = [
     { path: "/", name: "Home" },
     { path: "/logout", name: "Logout" },
@@ -31,7 +31,7 @@ const renderDashboardPage = asyncHandler(async (req, res) => {
 
   res.render("dashboard", {
     title: "Dashboard",
-    name: username,
+    name: user.username,
     routes,
     urls,
     urlsAnalytics,

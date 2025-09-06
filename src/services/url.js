@@ -2,13 +2,13 @@ const { formatUrl, generateUniqueCode, isValidCode } = require("../utils");
 const { Url } = require("../models");
 const { env } = require("../configs");
 
-const createUrlService = async (url) => {
+const createUrlService = async (url, user) => {
   const formatedUrl = formatUrl(url);
   if (!formatedUrl) {
     throw new Error("Invalid url");
   }
 
-  const exists = await Url.exists({ url: formatedUrl });
+  const exists = await Url.exists({ url: formatedUrl, userId: user._id });
 
   if (exists) {
     throw new Error("URL already in database");
@@ -18,6 +18,7 @@ const createUrlService = async (url) => {
   const newUrl = await Url.create({
     url: formatedUrl,
     code,
+    userId: user._id,
   });
 
   if (!newUrl) {
@@ -48,8 +49,13 @@ const urlRedirectService = async (code) => {
   return url.url;
 };
 
-const getUrlsService = async () => {
+const getUrlsService = async (user) => {
   const urls = await Url.aggregate([
+    {
+      $match: {
+        userId: user._id,
+      },
+    },
     {
       $project: {
         url: 1,
@@ -69,12 +75,17 @@ const getUrlsService = async () => {
   };
 };
 
-const getUrlsAnalyticsService = async () => {
+const getUrlsAnalyticsService = async (user) => {
   const now = new Date();
   const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
   const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
 
   const urlsAnalytics = await Url.aggregate([
+    {
+      $match: {
+        userId: user._id,
+      },
+    },
     {
       $unwind: {
         path: "$clicks",
@@ -109,7 +120,7 @@ const getUrlsAnalyticsService = async () => {
     },
   ]);
 
-  return { message: "not implemented", data: urlsAnalytics[0] };
+  return { message: "user analytics", data: urlsAnalytics[0] };
 };
 
 module.exports = {

@@ -19,6 +19,11 @@ const UrlSchema = new mongoose.Schema(
       unique: true,
     },
     clicks: [Date],
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      default: null,
+    },
   },
   { timestamps: true }
 );

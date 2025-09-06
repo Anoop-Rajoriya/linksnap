@@ -3,11 +3,12 @@ const { createUrlService, urlRedirectService } = require("../services/url");
 
 const createShortUrl = asyncHandler(async (req, res) => {
   const { url } = req.body || {};
+  const user = req.user || null;
 
   try {
     if (!url || !url.trim()) throw new Error("Url required");
 
-    const { message } = await createUrlService(url);
+    const { message } = await createUrlService(url, user);
     res.redirect(302, `/?success=${encodeURIComponent(message)}`);
   } catch (error) {
     res.redirect(302, `/?error=${encodeURIComponent(error.message)}`);
